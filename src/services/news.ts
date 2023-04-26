@@ -82,5 +82,5 @@ export const getRelatedNewsByUUIDAndCategory = async (uuid: string, category: st
 }
 
 export const getMostViewdByCategory = async (category: string) => {
-  return generateMockArray(category);
+  return mockArray;
 }
