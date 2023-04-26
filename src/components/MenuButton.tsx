@@ -21,7 +21,7 @@ export default function MenuButton({ title, path }: IMenuButtonProps) {
   return (
     <>
       <li className="-mb-px mr-1">
-        <Link className={active ? 'menu-active' : 'menu-inactive'} href={path}>
+        <Link className={(active ? 'menu-active' : 'menu-inactive')} href={path}>
           {title}
         </Link>
       </li>

@@ -3,15 +3,15 @@ import ThreeColumnNewsList from "@/components/PageSection/ThreeColumnNewsList";
 import { getHighlightNewsByCategory, getLatestNewsByCategory } from "@/services/news";
 import { GetStaticProps } from "next";
 
-interface ITechProps {
+interface IHealthProps {
   news: any[];
   latestNews: any[],
 }
 
-export const getStaticProps: GetStaticProps<ITechProps> = async (context) => {
+export const getStaticProps: GetStaticProps<IHealthProps> = async (context) => {
 
-  const news = await getHighlightNewsByCategory('tech');
-  const latestNews = await getLatestNewsByCategory('tech');
+  const news = await getHighlightNewsByCategory('health');
+  const latestNews = await getLatestNewsByCategory('health');
   return {
     props: {
       news,
@@ -20,10 +20,10 @@ export const getStaticProps: GetStaticProps<ITechProps> = async (context) => {
   }
 }
 
-export default function Tech({ news, latestNews }: ITechProps) {
+export default function Health({ news, latestNews }: IHealthProps) {
   return (
     <>
-      <HighlightNews title={'Technology News'} news={news} />
+      <HighlightNews title={'Health News'} news={news} />
       <ThreeColumnNewsList title={'Latest News'} news={latestNews}/>
     </>
   );

@@ -3,7 +3,6 @@ import ThreeColumnNewsList from "@/components/PageSection/ThreeColumnNewsList";
 import ThreeRowNewsList from "@/components/PageSection/ThreeRowNewsList";
 import { getHighlightNewsByCategory, getNewsByUUIDAndCategory, getRelatedNewsByUUIDAndCategory, mockArray } from "@/services/news";
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useRouter } from "next/router";
 
 interface INewsDetail {
   title: string;
@@ -21,9 +20,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 export const getStaticProps: GetStaticProps<INewsDetail> = async (context) => {
   const newsId = context.params?.id;
-  const data = await getNewsByUUIDAndCategory(newsId as string, 'tech');
-  const relatedNews = await getRelatedNewsByUUIDAndCategory(newsId as string, 'tech');
-  // const mostViewed = await getHighlightNewsByCategory('tech');
+  const data = await getNewsByUUIDAndCategory(newsId as string, 'entertainment');
+  const relatedNews = await getRelatedNewsByUUIDAndCategory(newsId as string, 'entertainment');
+  // const mostViewed = await getHighlightNewsByCategory('entertainment');
 
   return {
     props: {
@@ -42,7 +41,7 @@ export default function NewsDetailPage({ title, description, image, publishedAt,
     <>
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2">
-          <h3 className="py-4 text-xl font-bold">Technology News</h3>
+          <h3 className="py-4 text-xl font-bold">Entertainment News</h3>
           <NewsDetail title={title} description={description} image={image} publishedAt={publishedAt} />
         </div>
         <div className="col-span-1">

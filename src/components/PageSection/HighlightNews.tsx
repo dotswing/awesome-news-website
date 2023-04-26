@@ -3,13 +3,13 @@ import SmallNewsThumbnail from "../NewsThumbnail/SmallNewsThumbnail";
 
 interface IHighlightNewsProps {
   title: string;
-  news: any
+  news: any[]
 }
 
 export default function HighlightNews({ title, news }: IHighlightNewsProps) {
-  const bigNews = news.tech[0];
-  const smallNews = news.tech.slice(1, 3);
-  console.log('smallNews', smallNews);
+  const bigNews = news[0];
+  const smallNews = news.slice(1, 5);
+
   return (
     <>
       <h3 className="py-4 text-xl font-bold">{title}</h3>
@@ -25,10 +25,6 @@ export default function HighlightNews({ title, news }: IHighlightNewsProps) {
               </div>
             ))}
           </div>
-          {/* <div className="grid grid-cols-2 gap-4 pt-4">
-            <div className="col-span-1"><SmallNewsThumbnail /></div>
-            <div className="col-span-1"><SmallNewsThumbnail /></div>
-          </div> */}
         </div>
       </div>
     </>

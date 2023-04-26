@@ -1,47 +1,36 @@
 import axios from 'axios';
 
-const API_TOKEN = '35nLeS4dvbpGOq2o8sTK3FIQY8BhFBKl4WXzsVzw';
+const API_TOKEN = process.env.NEXT_NEWS_API_TOKEN;
 
-const getHightlightNews = async () => {
-  return [
-    {
-      id: 1,
-      title: 'News 1',
-      description: 'Description 1',
-      image: 'https://nypost.com/wp-content/uploads/sites/2/2023/04/newspress-collage-26759801-1682490023961.jpg?quality=75&strip=all&1682475730&w=1024',
-      author: 'Test news',
-      publishedAt: 'Monday',
-    },
-    {
-      id: 2,
-      title: 'News 2',
-      description: 'Description 2',
-      image: 'https://bostonglobe-prod.cdn.arcpublishing.com/resizer/o6zYB4C1evrLJXx_0te2MC3mXj4=/506x0/cloudfront-us-east-1.images.arcpublishing.com/bostonglobe/2JSTEY6PEFFFTFUAEULJQNRKIM.JPG',
-      author: 'Test news',
-      publishedAt: 'Tuesday',
-    },
-    {
-      id: 2,
-      title: 'News 3',
-      description: 'Description 3',
-      image: 'https://www.bostonglobe.com/pf/resources/images/logo-bg.jpg?d=407',
-      author: 'Test news',
-      publishedAt: 'Tuesday',
-    },
-    {
-      id: 2,
-      title: 'News 4',
-      description: 'Description 4',
-      image: 'https://bostonglobe-prod.cdn.arcpublishing.com/resizer/o6zYB4C1evrLJXx_0te2MC3mXj4=/506x0/cloudfront-us-east-1.images.arcpublishing.com/bostonglobe/2JSTEY6PEFFFTFUAEULJQNRKIM.JPG',
-      author: 'Test news',
-      publishedAt: 'Tuesday',
-    },
-  ];
-}
+export const mockArray = [
+  {
+    id: 'aaa',
+    title: 'title',
+    description: 'description',
+    image: 'https://s.isanook.com/me/0/rp/rc/w728h437/yatxacm1w0/aHR0cHM6Ly9zLmlzYW5vb2suY29tL21lLzAvdWQvMTYvODM5MTcvYmFsZW5jaWFnYS5qcGc=.webp',
+    publishedAt: '2021-08-01T00:00:00Z',
+    url: `/tech/aaa`
+  },
+  {
+    id: 'bbb',
+    title: 'title',
+    description: 'description',
+    image: 'https://s.isanook.com/me/0/rp/rc/w728h437/yatxacm1w0/aHR0cHM6Ly9zLmlzYW5vb2suY29tL21lLzAvdWQvMTYvODM5MTcvYmFsZW5jaWFnYS5qcGc=.webp',
+    publishedAt: '2021-08-01T00:00:00Z',
+    url: `/tech/bbb`
+  },
+  {
+    id: 'ccc',
+    title: 'title',
+    description: 'description',
+    image: 'https://s.isanook.com/me/0/rp/rc/w728h437/yatxacm1w0/aHR0cHM6Ly9zLmlzYW5vb2suY29tL21lLzAvdWQvMTYvODM5MTcvYmFsZW5jaWFnYS5qcGc=.webp',
+    publishedAt: '2021-08-01T00:00:00Z',
+    url: `/tech/ccc`
+  }
+]
 
 export const getHighlightNewsByCategory = async (category: string) => {
-  const { data } = await axios.get('https://api.thenewsapi.com/v1/news/top', { params: { categories: category, "api_token": API_TOKEN, locale: "us" }})
-  
+  const { data } = await axios.get('https://api.thenewsapi.com/v1/news/top', { params: { categories: category, "api_token": API_TOKEN, locale: "us", language: "en" }})
   return data.data.map((story: any) => ({
     id: story.uuid,
     title: story.title,
@@ -49,6 +38,49 @@ export const getHighlightNewsByCategory = async (category: string) => {
     publishedAt: story.published_at,
     image: story.image_url,
     author: 'Admin',
-    url: `${category}/${story.uuid}`,
+    url: `/${category}/${story.uuid}`,
   }));
+}
+
+export const getLatestNewsByCategory = async (category: string) => {
+  const { data } = await axios.get('https://api.thenewsapi.com/v1/news/all', { params: { categories: category, "api_token": API_TOKEN, locale: "us", sort: "published_at", language: "en" }})
+  return data.data.map((story: any) => ({
+    id: story.uuid,
+    title: story.title,
+    description: story.description,
+    publishedAt: story.published_at,
+    image: story.image_url,
+    author: 'Admin',
+    url: `/${category}/${story.uuid}`,
+  }));
+}
+
+export const getNewsByUUIDAndCategory = async (uuid: string, category: string) => {
+  const { data } = await axios.get(`https://api.thenewsapi.com/v1/news/uuid/${uuid}`, { params: { categories: category, "api_token": API_TOKEN, locale: "us", language: "en" }});
+  return {
+    id: data.uuid,
+    title: data.title,
+    description: data.description,
+    publishedAt: data.published_at,
+    image: data.image_url,
+    author: 'Admin',
+    url: `/${category}/${data.uuid}`,
+  };
+}
+
+export const getRelatedNewsByUUIDAndCategory = async (uuid: string, category: string) => {
+  const { data } = await axios.get(`https://api.thenewsapi.com/v1/news/similar/${uuid}`, { params: { categories: category, "api_token": API_TOKEN, locale: "us", language: "en" }});
+  return data.data.map((story: any) => ({
+    id: story.uuid,
+    title: story.title,
+    description: story.description,
+    publishedAt: story.published_at,
+    image: story.image_url,
+    author: 'Admin',
+    url: `/${category}/${story.uuid}`,
+  }));
+}
+
+export const getMostViewdByCategory = async (category: string) => {
+  return generateMockArray(category);
 }
